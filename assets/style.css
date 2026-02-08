@@ -1,0 +1,364 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
+
+:root {
+    --primary: #4f46e5;
+    --primary-light: #818cf8;
+    --primary-dark: #3730a3;
+    --secondary: #10b981;
+    --bg-body: #f3f4f6;
+    --surface: #ffffff;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --radius: 16px;
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --nav-height: 70px;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    margin: 0;
+    direction: rtl;
+    padding-bottom: calc(var(--nav-height) + 20px);
+    overflow-x: hidden;
+}
+
+/* --- تخطيط الصفحة --- */
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: grid;
+    gap: 20px;
+}
+
+@media (min-width: 992px) {
+    .app-container { grid-template-columns: 280px 1fr; padding: 40px; }
+    .mobile-nav { display: none !important; }
+    .desktop-sidebar { display: block !important; }
+    body { padding-bottom: 0; }
+}
+
+/* --- البطاقات --- */
+.card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 25px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255,255,255,0.5);
+    transition: 0.2s;
+}
+.wallet-card {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+/* --- 🛠️ التحديث هنا: إصلاح الجدول لصفحة المخزون --- */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* يسمح بالتمرير يمين/يسار في الجوال */
+    -webkit-overflow-scrolling: touch; /* تمرير ناعم للموبايل */
+    border-radius: var(--radius);
+    background: white;
+    border: 1px solid #f3f4f6;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    /* هذا هو السر: عرض أدنى يمنع تداخل الأعمدة */
+    min-width: 900px; 
+}
+
+thead tr {
+    background-color: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+th {
+    padding: 15px;
+    text-align: right;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    white-space: nowrap; /* يمنع نزول العناوين لسطرين */
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: middle;
+    white-space: nowrap; /* يمنع تداخل بيانات الكروت */
+}
+
+tr:last-child td { border-bottom: none; }
+tr:hover { background-color: #f9fafb; }
+
+/* --- أزرار وشبكات --- */
+.btn {
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: 0.2s;
+    font-family: inherit;
+    text-decoration: none;
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); }
+.btn-outline { background: transparent; border: 2px solid #e5e7eb; color: var(--text-muted); }
+.btn-danger { background: #fee2e2; color: #b91c1c; }
+
+input, select {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+    background: #f9fafb;
+}
+input:focus { border-color: var(--primary); background: white; }
+
+/* --- القائمة الجانبية (Desktop) --- */
+.desktop-sidebar {
+    display: none;
+    background: white;
+    height: calc(100vh - 80px);
+    position: sticky;
+    top: 40px;
+    border-radius: var(--radius);
+    padding: 30px;
+    box-shadow: var(--shadow-md);
+}
+
+/* تنسيق روابط القائمة الجانبية لضمان ظهورها بشكل صحيح */
+.desktop-sidebar .btn {
+    width: 100%;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+/* --- القائمة السفلية (Mobile) --- */
+.mobile-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    height: var(--nav-height);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.75rem;
+}
+.nav-link.active { color: var(--primary); font-weight: bold; }
+.nav-link i { font-size: 1.4rem; margin-bottom: 4px; }
+
+/* Badge */
+.badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; }
+
+/* Grid للمتجر */
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 15px;
+}
+/* ============================================================
+   تحسينات وضع الجوال - Admin Mobile App Experience
+   ============================================================ */
+@media (max-width: 991px) {
+    
+    /* 1. إخفاء القائمة الجانبية القديمة في الجوال */
+    .desktop-sidebar {
+        display: none !important;
+    }
+
+    /* 2. تحسين حاوية التطبيق لتأخذ كامل العرض */
+    .app-container {
+        grid-template-columns: 1fr !important; /* إلغاء التقسيم الجانبي */
+        padding: 15px !important;
+        padding-bottom: 90px !important; /* مساحة للقائمة السفلية */
+    }
+
+    /* 3. شريط التنقل السفلي (App Navigation Bar) */
+    .admin-mobile-nav {
+        display: flex !important; /* إظهاره فقط في الجوال */
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-top: 1px solid rgba(0,0,0,0.05);
+        box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+        z-index: 9999;
+        justify-content: space-around;
+        padding: 10px 0;
+        padding-bottom: env(safe-area-inset-bottom); /* لهواتف آيفون الحديثة */
+    }
+
+    .mobile-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: #94a3b8;
+        font-size: 0.7rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        padding: 5px 15px;
+        border-radius: 12px;
+    }
+
+    .mobile-nav-item i {
+        font-size: 1.4rem;
+        margin-bottom: 4px;
+        transition: 0.3s;
+    }
+
+    .mobile-nav-item.active {
+        color: var(--primary);
+        background: rgba(79, 70, 229, 0.08);
+    }
+    
+    .mobile-nav-item.active i {
+        transform: translateY(-2px);
+    }
+
+    /* 4. تحسين البطاقات لتشبه التطبيقات */
+    .card {
+        border: none !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+        border-radius: 20px !important;
+        margin-bottom: 15px !important;
+    }
+
+    /* 5. تحسين حقول الإدخال للمس */
+    input, select, button {
+        height: 50px !important; /* تكبير منطقة اللمس */
+        font-size: 1rem !important;
+    }
+
+    /* 6. تحسين العناوين العلوية */
+    h1 {
+        font-size: 1.5rem !important;
+        margin-bottom: 15px !important;
+    }
+
+    /* 7. تحسين الجدول ليصبح قابلاً للتمرير بسلاسة */
+    .table-container {
+        border: 1px solid #f1f5f9;
+        box-shadow: none;
+        background: transparent;
+    }
+    
+    /* جعل الصفوف متباعدة قليلاً كالقوائم */
+    table tbody tr {
+        background: white;
+    }
+    
+    table td {
+        padding: 15px 10px !important;
+        white-space: nowrap;
+    }
+}
+
+/* إخفاء القائمة السفلية في الشاشات الكبيرة */
+.admin-mobile-nav {
+    display: none;
+}
+/* ============================================================
+   تحسينات نهائية لوضع التطبيق (App Mode Polish)
+   ============================================================ */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 10px !important; /* تقليل الهوامش الجانبية */
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    h1 {
+        font-size: 1.3rem !important;
+        margin-right: 5px;
+    }
+
+    /* إخفاء الجداول تماماً في الجوال */
+    table, .desktop-only {
+        display: none !important;
+    }
+
+    /* تحسين شكل بطاقة الجوال */
+    .mobile-card-view {
+        background: white;
+        border-radius: 16px;
+        padding: 15px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        border: 1px solid #f1f5f9;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+    
+    .mobile-card-icon {
+        width: 45px; height: 45px;
+        border-radius: 12px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.2rem;
+        margin-left: 15px;
+        flex-shrink: 0;
+    }
+
+    .mobile-card-details {
+        flex: 1;
+    }
+
+    .mobile-card-title {
+        font-weight: 800;
+        font-size: 0.95rem;
+        color: #1e293b;
+        margin-bottom: 4px;
+    }
+
+    .mobile-card-sub {
+        font-size: 0.8rem;
+        color: #64748b;
+    }
+    
+    .mobile-card-amount {
+        font-weight: 900;
+        font-size: 1rem;
+        text-align: left;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+}

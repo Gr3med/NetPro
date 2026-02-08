@@ -1,0 +1,15 @@
+{
+    "name": "eng.mohammeda-li/miks1",
+    "autoload": {
+        "psr-4": {
+            "EngMohammedaLi\\Miks1\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gr3med",
+            "email": "mo73869877@gmail.com"
+        }
+    ],
+    "require": {}
+}
